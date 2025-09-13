@@ -1,0 +1,376 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamelireAPK - Лучшие офлайн игры для Android</title>
+    <meta name="description" content="Скачивайте проверенные APK файлы популярных мобильных игр бесплатно. Stick War Legacy, Zombie Tsunami и другие офлайн игры.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="logo">GamelireAPK</div>
+            <nav>
+    <a href="index.html">Главная</a>
+    <a href="games.html">Игры</a>
+    <a href="about.html">О нас</a>
+</nav>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <section class="hero">
+        <div class="container">
+            <h1>Лучшие офлайн игры для Android</h1>
+            <p>Скачивайте проверенные APK-файлы бесплатно и наслаждайтесь игрой без интернета!</p>
+        </div>
+    </section>
+
+    <!-- Сетка с играми -->
+    <main class="container">
+        <h2>Популярные игры</h2>
+        <div class="games-grid" id="games-grid">
+            <!-- Карточки игр будут добавляться сюда через JavaScript -->
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="container">
+            <p>© 2023 GemelireAPK Мы не храним APK-файлы на своем сервере. Все права на игры принадлежат их разработчикам. Мы только предоставляем ссылки на официальные и проверенные источники.</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для скачивания -->
+    <div id="download-modal" class="modal">
+        <div class="modal-content">
+            <h3>⚠️ Внимание!</h3>
+            <p>Вы собираетесь скачать APK-файл для игры <strong id="modal-game-title"></strong> со стороннего источника.</p>
+            <p>Убедитесь, что доверяете ему. Мы рекомендуем скачивать игры с официального Google Play для вашей безопасности.</p>
+            <div class="modal-buttons">
+                <a id="modal-download-link" class="btn-modal-continue" target="_blank">Продолжить</a>
+                <button id="modal-cancel-btn" class="btn-modal-cancel">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html><style>/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f8fff8;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+nav a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #2ecc71;
+}
+
+/* Главный баннер */
+.hero {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Сетка игр */
+main {
+    padding: 3rem 0;
+}
+
+main h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #27ae60;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.game-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+}
+
+.game-image {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+}
+
+.game-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-info {
+    padding: 1.5rem;
+}
+
+.game-info h3 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.game-info p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.game-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+    display: inline-block;
+}
+
+.btn-play {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-download {
+    background-color: transparent;
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Подвал */
+footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.modal-content p:last-of-type {
+    margin-bottom: 1.5rem;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-modal-continue {
+    background: #2ecc71;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-modal-cancel {
+    background: #e74c3c;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}</style><script>// Массив с играми
+const games = [
+    {
+        title: "Stick War: Saga",
+        description: "Масштабная PVP-стратегия в мире стикменов. Создай армию, сражайся с игроками со всего мира и участвуй в эпической битве между Порядком и Хаосом!",
+        image: "https://i.ibb.co/N6szkBh3/stick-war-saga-cover.jpg",
+        playStoreLink: "https://play.google.com/store/apps/details?id=com.maxgames.stickwar3", 
+        apkDownloadLink: "https://disk.yandex.ru/d/PXurcVmXhRB8Hw"
+    }
+];
+
+// Функция для отрисовки карточек игр
+function renderGames() {
+    const gamesGrid = document.getElementById('games-grid');
+    
+    if (!gamesGrid) {
+        console.error('Элемент с id "games-grid" не найден!');
+        return;
+    }
+    
+    gamesGrid.innerHTML = ''; // Очищаем сетку
+
+    games.forEach(game => {
+        const gameCard = document.createElement('div');
+        gameCard.classList.add('game-card');
+        gameCard.innerHTML = `
+            <div class="game-image">
+                <img src="${game.image}" alt="${game.title}">
+            </div>
+            <div class="game-info">
+                <h3>${game.title}</h3>
+                <p>${game.description}</p>
+                <div class="game-buttons">
+                    <a href="${game.playStoreLink}" target="_blank" class="btn btn-play">Google Play</a>
+                    <button class="btn btn-download download-btn" data-title="${game.title}" data-link="${game.apkDownloadLink}">Скачать APK</button>
+                </div>
+            </div>
+        `;
+        gamesGrid.appendChild(gameCard);
+    });
+
+    // Добавляем обработчики событий для кнопок скачивания
+    document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const title = this.getAttribute('data-title');
+            const link = this.getAttribute('data-link');
+            createDownloadModal(title, link);
+        });
+    });
+}
+
+// Функция для создания модального окна
+function createDownloadModal(gameTitle, downloadLink) {
+    const modal = document.getElementById('download-modal');
+    const modalTitle = document.getElementById('modal-game-title');
+    const modalLink = document.getElementById('modal-download-link');
+    const cancelBtn = document.getElementById('modal-cancel-btn');
+    
+    // Устанавливаем данные в модальное окно
+    modalTitle.textContent = gameTitle;
+    modalLink.href = downloadLink;
+    
+    // Показываем модальное окно
+    modal.style.display = 'flex';
+    
+    // Обработчик для кнопки отмены
+    cancelBtn.onclick = function() {
+        modal.style.display = 'none';
+    };
+    
+    // Закрытие модального окна при клике вне его
+    modal.onclick = function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
+
+// Запускаем отрисовку при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Страница загружена, запускаем отрисовку игр...');
+    renderGames();
+});</script>
